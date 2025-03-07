@@ -1,0 +1,12 @@
+environment: "local" # local/dev/prod
+
+server:
+  port: "8080"
+
+database:
+  host: "localhost"
+  port: "5432"
+  user: "postgres"
+  password: "10D18E03I13m"
+  dbname: "todo_app"
+  sslmode: "disable"
