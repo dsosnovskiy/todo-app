@@ -20,13 +20,13 @@ type DatabaseConfig struct {
 }
 
 type Config struct {
-	Environment string         `yaml:"environment"`
-	Server      ServerConfig   `yaml:"server"`
-	Database    DatabaseConfig `yaml:"database"`
+	Env      string         `yaml:"env"`
+	Server   ServerConfig   `yaml:"server"`
+	Database DatabaseConfig `yaml:"database"`
 }
 
 // Loads the configuration
-func LoadConfig() *Config {
+func Load() *Config {
 	cfg := &Config{}
 
 	if err := cleanenv.ReadConfig("config/config.yaml", cfg); err != nil {

@@ -1,4 +1,4 @@
-environment: "local" # local/dev/prod
+env: "local" # local/dev/prod
 
 server:
   port: "8080"

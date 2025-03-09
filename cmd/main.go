@@ -13,37 +13,31 @@ import (
 
 func main() {
 
-	// Load the configuration
-	cfg := config.LoadConfig()
+	cfg := config.Load()
 
-	// Initialize the logger
-	log := logging.InitLogger(cfg.Environment)
+	logger := logging.Init(cfg.Env)
 
-	// Creating models
-	// Connection to the database
-	db, err := database.ConnectDB(cfg)
+	db, err := database.Connect(cfg)
 	if err != nil {
-		log.Fatalf("Failed to connect to the database: %v", err)
+
+		logger.Fatalf("Failed to connect to the database: %v", err)
 	}
-	log.Debug("Successfully connected to the database")
+	logger.Debug("Successfully connected to the database")
 
-	// Initialize the repository
 	taskRepo := repository.NewTaskRepository(db)
-	log.Debug("Successfully initialized the repository")
+	logger.Debug("Successfully initialized the repository")
 
-	// Initialize the service
 	taskService := service.NewTaskService(taskRepo)
-	log.Debug("Successfully initialized the service")
+	logger.Debug("Successfully initialized the service")
 
-	// Initialize the handler
 	taskHandler := handler.NewTaskHandler(taskService)
-	log.Debug("Successfully initialized the handler")
+	logger.Debug("Successfully initialized the handler")
 
-	// Initialize the router
-	r := router.NewRouter(taskHandler)
-	log.Debug("Successfully initialized the router")
+	r := router.New(taskHandler)
+	logger.Debug("Successfully initialized the router")
 
-	// Start the server
-	log.Debug("The server is running on port: ", cfg.Server.Port)
-	http.ListenAndServe(":"+cfg.Server.Port, r)
+	logger.Infof("The server is running on port: %s", cfg.Server.Port)
+	if err := http.ListenAndServe("localhost:"+cfg.Server.Port, r); err != nil {
+		logger.Fatalf("Failed to start the server: %v", err)
+	}
 }

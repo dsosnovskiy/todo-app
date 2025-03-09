@@ -10,7 +10,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func ConnectDB(cfg *config.Config) (*gorm.DB, error) {
+func Connect(cfg *config.Config) (*gorm.DB, error) {
 	connectionString := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
 		cfg.Database.Host,
 		cfg.Database.Port,

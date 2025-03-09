@@ -6,11 +6,9 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func InitLogger(environment string) *logrus.Logger {
-	// Initialize logger
+func Init(environment string) *logrus.Logger {
 	logger := logrus.New()
 
-	// Set log level
 	switch environment {
 	case "local":
 		logger.SetLevel(logrus.DebugLevel)
@@ -22,12 +20,12 @@ func InitLogger(environment string) *logrus.Logger {
 		logger.SetLevel(logrus.WarnLevel)
 	}
 
-	// Set log format
 	logger.SetFormatter(&logrus.TextFormatter{
-		FullTimestamp: true,
+		ForceColors:            true,
+		DisableLevelTruncation: true,
+		FullTimestamp:          true,
 	})
 
-	// Set log output
 	logger.SetOutput(os.Stdout)
 
 	return logger
